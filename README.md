@@ -1,31 +1,69 @@
-Yii2 Slack integration
-======================
-Yii2 slack client based on GuzzleHttp library
+# Yii2 Slack integration
 
-Installation
-------------
+Designed to send messages to slack messenger
 
-The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
+![How it looks](http://dn.imagy.me/201602/15/12d7dae10bfb96c159f48901d518e196.png)
 
-Either run
 
-```
+## Installation
+
+```bash
 php composer.phar require --prefer-dist yiier/yii2-slack "*"
 ```
 
-or add
+Also, you should configure [incoming webhook](https://api.slack.com/incoming-webhooks) inside your Slack team.
 
-```
-"yiier/yii2-slack": "*"
-```
+## Usage
 
-to the require section of your `composer.json` file.
-
-
-Usage
------
-
-Once the extension is installed, simply use it in your code by  :
+Configure component:
 
 ```php
-<?= \yiier\slack\AutoloadExample::widget(); ?>```
+...
+    'components' => [
+        'slack' => [
+            'httpclient' => ['class' => 'Curl\Curl'],
+            'class' => 'yiier\slack\Client',
+            'url' => '<slack incoming webhook url here>',
+            'username' => 'My awesome application',
+        ],
+    ],
+...
+```
+
+Now you can send messages right into slack channel via next command:
+
+```php
+Yii::$app->slack->send('Hello', ':thumbs_up:', [
+    [
+        // attachment object
+        'text' => 'text of attachment',
+        'pretext' => 'pretext here',
+    ],
+]);
+```
+
+To learn more about attachments, [read Slack documentation](https://api.slack.com/incoming-webhooks)
+
+Also you can use slack as a log target:
+
+```php
+...
+'components' => [
+    'log' => [
+        'traceLevel' => 3,
+        'targets' => [
+            [
+                'class' => 'yiier\slack\LogTarget',
+                'categories' => ['commandBus'],
+                'exportInterval' => 1, // Send logs on every message
+                'logVars' => [],
+            ],
+        ],
+    ],
+],
+...
+```
+
+## Credits
+
+[Understeam/yii2-slack](https://github.com/Understeam/yii2-slack)
