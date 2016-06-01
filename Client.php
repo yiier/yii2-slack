@@ -25,10 +25,12 @@ class Client extends Component
     public function init()
     {
         if (!$this->httpclient) {
-            throw new InvalidConfigException("Client::httpclient must not be empty .");
+            throw new InvalidConfigException("Client::httpclient cannot be empty .");
         }
-        if (!isset($this->httpclient->post)) {
-            throw new InvalidConfigException("Client::httpclient post Can not be empty .");
+
+        $this->httpclient = Yii::createObject($this->httpclient);
+        if (!method_exists($this->httpclient, 'post')) {
+            throw new InvalidConfigException("Client::httpclient post method must exist .");
         }
     }
 
