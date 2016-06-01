@@ -1,0 +1,21 @@
+{
+    "name": "yiier/yii2-slack",
+    "description": "Yii2 slack client based on GuzzleHttp library",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension","slack"],
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "forecho",
+            "email": "caizhenghai@gmail.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "yiier\\slack\\": ""
+        }
+    }
+}
