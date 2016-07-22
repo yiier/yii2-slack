@@ -20,23 +20,23 @@ class Client extends Component
     public $defaultText = "Message from Yii application";
 
     /** @var string|object */
-    public $httpclient = '';
+    public $httpClient = '';
 
     public function init()
     {
-        if (!$this->httpclient) {
-            throw new InvalidConfigException("Client::httpclient cannot be empty .");
+        if (!$this->httpClient) {
+            throw new InvalidConfigException("Client::httpClient cannot be empty .");
         }
 
-        $this->httpclient = Yii::createObject($this->httpclient);
-        if (!method_exists($this->httpclient, 'post')) {
-            throw new InvalidConfigException("Client::httpclient post method must exist .");
+        $this->httpClient = Yii::createObject($this->httpClient);
+        if (!method_exists($this->httpClient, 'post')) {
+            throw new InvalidConfigException("Client::httpClient post method must exist .");
         }
     }
 
     public function send($text = null, $icon = null, $attachments = [])
     {
-        $this->httpclient->post($this->url, [
+        $this->httpClient->post($this->url, [
             'payload' => Json::encode($this->getPayload($text, $icon, $attachments)),
         ]);
     }

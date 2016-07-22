@@ -21,7 +21,7 @@ Configure component:
 ...
     'components' => [
         'slack' => [
-            'httpclient' => ['class' => 'Curl\Curl'],
+            'httpClient' => ['class' => 'Curl\Curl'],
             'class' => 'yiier\slack\Client',
             'url' => '<slack incoming webhook url here>',
             'username' => 'My awesome application',
@@ -58,6 +58,35 @@ Also you can use slack as a log target:
                 'exportInterval' => 1, // Send logs on every message
                 'logVars' => [],
             ],
+        ],
+    ],
+],
+...
+```
+
+or
+
+```php
+...
+'components' => [
+    'log' => [
+        'traceLevel' => 3,
+        [
+            'class' => 'yiier\slack\LogTarget',
+            'levels' => ['error'],
+            'enabled' => true,
+            'emoji' => ':beetle:',
+            'logMessage' => '错误信息',
+            'categories' => [
+                'yii\db\*',
+                'yii\web\HttpException:*',
+                'error',
+            ],
+            'except' => [
+                'yii\web\HttpException:404', // 除了404错误
+            ],
+            'exportInterval' => 1, // Send logs on every message
+            'logVars' => [],
         ],
     ],
 ],

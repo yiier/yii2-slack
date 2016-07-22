@@ -14,8 +14,14 @@ use yii\web\Request;
 
 class LogTarget extends Target
 {
-    public $sendLogs = false;
+    /**
+     * @var string
+     */
+    public $logMessage = 'Log message';
 
+    /**
+     * @var null
+     */
     public $emoji = null;
 
     /**
@@ -44,7 +50,7 @@ class LogTarget extends Target
      */
     public function export()
     {
-        $this->slack->send("Log message", $this->emoji, $this->getAttachments());
+        $this->slack->send($this->logMessage, $this->emoji, $this->getAttachments());
     }
 
     public function getLevelColor($level)
